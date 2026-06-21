@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, viewport-fit=cover" />
     <title>↕ FlipScript — Upside-Down Studio</title>
     <style>
-        /* ----- Tüm cihazlar için akışkan tasarım (clamp, flex, scroll) ----- */
+        /* ----- Tüm cihazlar için akışkan tasarım ----- */
         *,
         *::before,
         *::after {
@@ -66,7 +66,6 @@
         @media (max-width: 480px) {
             .app { padding: var(--space-md); border-radius: clamp(12px, 4vw, 18px); }
         }
-        /* ----- Brand ----- */
         .brand {
             display: flex;
             align-items: center;
@@ -121,7 +120,6 @@
             color: var(--text-dim);
             white-space: nowrap;
         }
-        /* ----- Input / Output ----- */
         .input-section,
         .output-section {
             margin-bottom: var(--space-md);
@@ -206,7 +204,6 @@
             opacity: 0.4;
             font-style: italic;
         }
-        /* ----- Emoji Keyboard ----- */
         .emoji-section {
             margin: var(--space-sm) 0 var(--space-xs);
         }
@@ -352,7 +349,6 @@
             transform: scale(0.88);
             background: var(--surface3);
         }
-        /* ----- Copy Button ----- */
         .output-actions {
             display: flex;
             align-items: center;
@@ -398,7 +394,6 @@
             height: clamp(14px, 1.2vw, 18px);
             flex-shrink: 0;
         }
-        /* ----- Footer ----- */
         .footer-meta {
             margin-top: var(--space-lg);
             display: flex;
@@ -444,36 +439,16 @@
             margin-top: 0.2rem;
         }
         @media (max-width: 340px) {
-            .brand-left {
-                gap: 0.2rem;
-            }
-            .brand h1 {
-                font-size: clamp(0.9rem, 4vw, 1.1rem);
-            }
-            .brand-tagline {
-                display: none;
-            }
-            .badge {
-                font-size: 0.55rem;
-                padding: 0.05rem 0.4rem;
-            }
-            .emoji-btn {
-                min-width: 1.8rem;
-                min-height: 1.8rem;
-                font-size: 1.2rem;
-            }
-            .emoji-grid {
-                padding: 0.3rem;
-                gap: 0.1rem;
-            }
+            .brand-left { gap: 0.2rem; }
+            .brand h1 { font-size: clamp(0.9rem, 4vw, 1.1rem); }
+            .brand-tagline { display: none; }
+            .badge { font-size: 0.55rem; padding: 0.05rem 0.4rem; }
+            .emoji-btn { min-width: 1.8rem; min-height: 1.8rem; font-size: 1.2rem; }
+            .emoji-grid { padding: 0.3rem; gap: 0.1rem; }
         }
         @media (min-width: 1400px) {
-            .app {
-                padding: var(--space-lg) var(--space-xl);
-            }
-            :root {
-                --space-xl: clamp(2.5rem, 3vw, 3.5rem);
-            }
+            .app { padding: var(--space-lg) var(--space-xl); }
+            :root { --space-xl: clamp(2.5rem, 3vw, 3.5rem); }
         }
     </style>
 </head>
@@ -539,175 +514,46 @@
             'use strict';
 
             // --------------------------------------------------------------
-            // 1. UPSIDE-DOWN MAP – Tüm sohbet karakterleri (noktalama, sembol, tırnak)
+            // 1. UPSIDE-DOWN MAP – Tüm karakterler (emoji hariç)
             // --------------------------------------------------------------
             const UPSIDE_DOWN_MAP = {
-                // ---- HARFLER ----
-                'a': 'ɐ',
-                'b': 'q',
-                'c': 'ɔ',
-                'd': 'p',
-                'e': 'ǝ',
-                'f': 'ɟ',
-                'g': 'ƃ',
-                'h': 'ɥ',
-                'i': 'ᴉ',
-                'j': 'ɾ',
-                'k': 'ʞ',
-                'l': 'l',
-                'm': 'ɯ',
-                'n': 'u',
-                'o': 'o',
-                'p': 'd',
-                'q': 'b',
-                'r': 'ɹ',
-                's': 's',
-                't': 'ʇ',
-                'u': 'n',
-                'v': 'ʌ',
-                'w': 'ʍ',
-                'x': 'x',
-                'y': 'ʎ',
-                'z': 'z',
-                'A': '∀',
-                'B': '𐐒',
-                'C': 'Ɔ',
-                'D': '◖',
-                'E': 'Ǝ',
-                'F': 'Ⅎ',
-                'G': '⅁',
-                'H': 'H',
-                'I': 'I',
-                'J': 'ſ',
-                'K': 'ʞ',
-                'L': '˥',
-                'M': 'W',
-                'N': 'N',
-                'O': 'O',
-                'P': 'Ԁ',
-                'Q': 'Ό',
-                'R': 'ᴚ',
-                'S': 'S',
-                'T': '⊥',
-                'U': '∩',
-                'V': 'ᴧ',
-                'W': 'M',
-                'X': 'X',
-                'Y': '⅄',
-                'Z': 'Z',
+                // Harfler
+                'a': 'ɐ', 'b': 'q', 'c': 'ɔ', 'd': 'p', 'e': 'ǝ', 'f': 'ɟ',
+                'g': 'ƃ', 'h': 'ɥ', 'i': 'ᴉ', 'j': 'ɾ', 'k': 'ʞ', 'l': 'l',
+                'm': 'ɯ', 'n': 'u', 'o': 'o', 'p': 'd', 'q': 'b', 'r': 'ɹ',
+                's': 's', 't': 'ʇ', 'u': 'n', 'v': 'ʌ', 'w': 'ʍ', 'x': 'x',
+                'y': 'ʎ', 'z': 'z',
+                'A': '∀', 'B': '𐐒', 'C': 'Ɔ', 'D': '◖', 'E': 'Ǝ', 'F': 'Ⅎ',
+                'G': '⅁', 'H': 'H', 'I': 'I', 'J': 'ſ', 'K': 'ʞ', 'L': '˥',
+                'M': 'W', 'N': 'N', 'O': 'O', 'P': 'Ԁ', 'Q': 'Ό', 'R': 'ᴚ',
+                'S': 'S', 'T': '⊥', 'U': '∩', 'V': 'ᴧ', 'W': 'M', 'X': 'X',
+                'Y': '⅄', 'Z': 'Z',
                 // Türkçe
-                'ç': 'ç',
-                'ğ': 'ğ',
-                'ı': 'ı',
-                'ö': 'ö',
-                'ş': 'ş',
-                'ü': 'ü',
-                'Ç': 'Ç',
-                'Ğ': 'Ğ',
-                'İ': 'İ',
-                'Ö': 'Ö',
-                'Ş': 'Ş',
-                'Ü': 'Ü',
-                // Fransızca aksanlar
-                'é': 'é',
-                'è': 'è',
-                'ê': 'ê',
-                'ë': 'ë',
-                'à': 'à',
-                'â': 'â',
-                'ù': 'ù',
-                'ô': 'ô',
-                'œ': 'œ',
-                'æ': 'æ',
-                'É': 'É',
-                'È': 'È',
-                'Ê': 'Ê',
-                'Ë': 'Ë',
-                'À': 'À',
-                'Â': 'Â',
-                'Ù': 'Ù',
-                'Ô': 'Ô',
-                'Œ': 'Œ',
-                'Æ': 'Æ',
-
-                // ---- RAKAMLAR ----
-                '0': '0',
-                '1': '⇂',
-                '2': 'ᘔ',
-                '3': 'Ɛ',
-                '4': 'ᔭ',
-                '5': 'S',
-                '6': '9',
-                '7': 'Ɫ',
-                '8': '8',
-                '9': '6',
-
-                // ---- TEMEL NOKTA & SORU/ÜNLEM ----
-                '.': '˙',
-                ',': 'ʻ',
-                '?': '¿',
-                '!': '¡',
-                ';': '؛',
-                ':': '∶',
-                '…': '…', // kendisi
-                '·': '·', // kendisi
-
-                // ---- ÇİZGİLER ----
-                '-': '-',
-                '—': '—',
-                '–': '–',
-                '_': '‾',
-
-                // ---- TIRNAK İŞARETLERİ (çift ve tek, düz ve kıvrık) ----
-                '"': '"',
-                "'": "'",
-                '«': '»',
-                '»': '«',
-                '‹': '›',
-                '›': '‹',
-                '„': '“',
-                '“': '„',
-                '”': '„',
-                '‘': '’',
-                '’': '‘',
-
-                // ---- PARANTEZ VE KÖŞELİ ----
-                '(': ')',
-                ')': '(',
-                '[': ']',
-                ']': '[',
-                '{': '}',
-                '}': '{',
-                '<': '>',
-                '>': '<',
-
-                // ---- SEMBOLLER (sohbet) ----
-                '&': '⅋',
-                '@': '@', // tersi yok
-                '#': '#',
-                '$': '$',
-                '%': '%',
-                '^': '^',
-                '*': '*',
-                '\\': '/',
-                '/': '\\',
-                '|': '|',
-                '~': '~',
-                '`': '`',
-                '+': '+',
-                '=': '=',
-                '€': '€',
-                '£': '£',
-                '¥': '¥',
-                '©': '©',
-                '®': '®',
-                '™': '™',
-                '§': '§',
-                '¶': '¶',
-                '•': '•',
-                '◦': '◦',
-
-                // ---- BOŞLUK ----
+                'ç': 'ç', 'ğ': 'ğ', 'ı': 'ı', 'ö': 'ö', 'ş': 'ş', 'ü': 'ü',
+                'Ç': 'Ç', 'Ğ': 'Ğ', 'İ': 'İ', 'Ö': 'Ö', 'Ş': 'Ş', 'Ü': 'Ü',
+                // Fransızca
+                'é': 'é', 'è': 'è', 'ê': 'ê', 'ë': 'ë', 'à': 'à', 'â': 'â',
+                'ù': 'ù', 'ô': 'ô', 'œ': 'œ', 'æ': 'æ',
+                'É': 'É', 'È': 'È', 'Ê': 'Ê', 'Ë': 'Ë', 'À': 'À', 'Â': 'Â',
+                'Ù': 'Ù', 'Ô': 'Ô', 'Œ': 'Œ', 'Æ': 'Æ',
+                // Rakamlar
+                '0': '0', '1': '⇂', '2': 'ᘔ', '3': 'Ɛ', '4': 'ᔭ',
+                '5': 'S', '6': '9', '7': 'Ɫ', '8': '8', '9': '6',
+                // Noktalama & semboller
+                '.': '˙', ',': 'ʻ', '?': '¿', '!': '¡', ';': '؛', ':': '∶',
+                '…': '…', '·': '·',
+                '-': '-', '—': '—', '–': '–', '_': '‾',
+                '"': '"', "'": "'",
+                '«': '»', '»': '«', '‹': '›', '›': '‹',
+                '„': '“', '“': '„', '”': '„', '‘': '’', '’': '‘',
+                '(': ')', ')': '(', '[': ']', ']': '[', '{': '}', '}': '{',
+                '<': '>', '>': '<',
+                '&': '⅋', '@': '@', '#': '#', '$': '$', '%': '%',
+                '^': '^', '*': '*', '\\': '/', '/': '\\', '|': '|',
+                '~': '~', '`': '`', '+': '+', '=': '=',
+                '€': '€', '£': '£', '¥': '¥',
+                '©': '©', '®': '®', '™': '™',
+                '§': '§', '¶': '¶', '•': '•', '◦': '◦',
                 ' ': ' '
             };
 
@@ -728,10 +574,11 @@
             let currentCategory = '';
 
             // --------------------------------------------------------------
-            // 3. CONVERTER
+            // 3. CONVERTER – DÜZELTİLDİ (emoji bozulması giderildi)
             // --------------------------------------------------------------
             function convertToUpsideDown(text) {
-                return text.split('').reverse().map(ch => UPSIDE_DOWN_MAP[ch] || ch).join('');
+                // [...text] ile Unicode kod noktalarını doğru ayır
+                return [...text].reverse().map(ch => UPSIDE_DOWN_MAP[ch] || ch).join('');
             }
 
             // --------------------------------------------------------------
@@ -786,7 +633,7 @@
             });
 
             // --------------------------------------------------------------
-            // 6. EMOJI KEYBOARD
+            // 6. EMOJI KEYBOARD (kategorili)
             // --------------------------------------------------------------
             function renderEmojisForCategory(category) {
                 const filtered = allEmojis.filter(e => e.category === category);
@@ -888,7 +735,7 @@
             updateUI();
             loadEmojis();
 
-            console.log('✅ FlipScript – tüm noktalama ve semboller eklendi.');
+            console.log('✅ FlipScript çalışıyor – emoji düzeltmesi yapıldı.');
         })();
     </script>
 </body>
